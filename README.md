@@ -64,6 +64,8 @@ MLV-Jalianwala/
 ---
 Created with ❤️ by Rishikesh Bhatt "# jalianwallah" 
 
+## Deployed version
+**website link** https://rishikesh831-jalianwallah-streamlit-app-umkjva.streamlit.app/
 
 ![Screenshot 2025-06-22 000052](https://github.com/user-attachments/assets/67b516f9-5c7c-4eb6-9c97-42ba08da3784)
 ![Screenshot 2025-06-22 000110](https://github.com/user-attachments/assets/c058eec4-3074-4d40-9f0e-38630a99cd5b)
