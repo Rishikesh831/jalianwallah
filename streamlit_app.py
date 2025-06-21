@@ -2,6 +2,9 @@ import streamlit as st
 import numpy as np
 import os
 import sys
+import datetime
+
+# Add local modules
 sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
 from utils import load_model, load_scaler, scale_features
 
@@ -22,27 +25,40 @@ st.markdown("""
 
 MODEL_PATH = os.path.join("models", "jallianwala_model.pkl")
 SCALER_PATH = os.path.join("models", "scaler.pkl")
-FEATURES = ['NewsArticles', 'YouTubeUploads', 'WeightedEvents', 'InverseDays', 'DaysSquared']
 
-# User input
+# User Inputs
 st.header("Enter Feature Values")
 col1, col2 = st.columns(2)
+
 with col1:
     news = st.number_input("Number of News Articles", min_value=0, max_value=100, value=30)
     yt = st.number_input("YouTube Uploads", min_value=0, max_value=50, value=10)
     weighted_events = st.number_input("Weighted Events", min_value=0.0, max_value=1.0, value=0.0, step=0.001, format="%.3f")
-with col2:
-    inverse_days = st.number_input("Inverse Days to Anniversary", min_value=0.0, max_value=0.1, value=0.005, step=0.0001, format="%.5f")
-    days_squared = st.number_input("Days Squared from Anniversary", min_value=0, max_value=200000, value=10000)
 
+with col2:
+    input_date = st.date_input("📅 Select Date", value=datetime.date.today())
+    anniversary_date = datetime.date(2025, 4, 13)
+    days_to_anniversary = abs((anniversary_date - input_date).days)
+    inverse_days = 1 / days_to_anniversary if days_to_anniversary != 0 else 0
+    days_squared = days_to_anniversary ** 2
+
+# Predict
 if st.button("Predict Public Interest", help="Click to predict public interest level."):
     w, b = load_model(MODEL_PATH)
     mean, std = load_scaler(SCALER_PATH)
+
     X = np.array([news, yt, weighted_events, inverse_days, days_squared], dtype=float)
     X_scaled = scale_features(X, mean, std)
     pred = X_scaled @ w + b
-    st.markdown(f"<div style='background-color:#b22222;padding:1rem;border-radius:8px;text-align:center;'><span style='color:white;font-size:2rem;'>Predicted Public Interest: <b>{pred:.2f}</b></span></div>", unsafe_allow_html=True)
+
+    st.markdown(
+        f"<div style='background-color:#b22222;padding:1rem;border-radius:8px;text-align:center;'>"
+        f"<span style='color:white;font-size:2rem;'>Predicted Public Interest: <b>{pred:.2f}</b></span></div>",
+        unsafe_allow_html=True
+    )
+
     st.progress(min(max(pred/100, 0), 1), text="Interest Level")
+
     if pred > 80:
         st.success("High public interest expected. Consider commemorative events and awareness campaigns.")
     elif pred > 40:
@@ -50,7 +66,8 @@ if st.button("Predict Public Interest", help="Click to predict public interest l
     else:
         st.warning("Low public interest. More outreach may be needed.")
 
+# Footer
 st.caption("""
 ---
-Created with ❤️ as a tribute to the martyrs of Jallianwala Bagh. | Project by [Your Name]
-""") 
+Created with ❤️ as a tribute to the martyrs of Jallianwala Bagh. | Project by Rishikesh Bhatt
+""")
