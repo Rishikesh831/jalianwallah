@@ -62,4 +62,10 @@ MLV-Jalianwala/
 > This project is dedicated to the memory of the innocent lives lost at Jallianwala Bagh, Amritsar, 1919. May we always remember their sacrifice and strive for peace and justice.
 
 ---
-Created with ❤️ by [Your Name] "# jalianwallah" 
+Created with ❤️ by Rishikesh Bhatt "# jalianwallah" 
+
+
+![Screenshot 2025-06-22 000052](https://github.com/user-attachments/assets/67b516f9-5c7c-4eb6-9c97-42ba08da3784)
+![Screenshot 2025-06-22 000110](https://github.com/user-attachments/assets/c058eec4-3074-4d40-9f0e-38630a99cd5b)
+
+
